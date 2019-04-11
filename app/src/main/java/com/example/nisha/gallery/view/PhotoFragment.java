@@ -38,7 +38,15 @@ public class PhotoFragment extends Fragment implements PhotoContract.View {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_photo_detail, container, false);
+
+        ((MainActivity) getActivity()).setActionBarTitle(photoTitle);
+
         mImageView = root.findViewById(R.id.photo_detail);
+        Picasso.get()
+                .load(photoUrl).fit().centerCrop()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(mImageView);
         return root;
     }
 
@@ -68,17 +76,12 @@ public class PhotoFragment extends Fragment implements PhotoContract.View {
     @Override
     public void showTitle(String title) {
         photoTitle = title;
-        ((MainActivity) getActivity()).setActionBarTitle(photoTitle);
     }
 
     @Override
     public void showPhoto(String url) {
         photoUrl = url;
-        Picasso.get()
-                .load(photoUrl).fit().centerCrop()
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .error(R.drawable.ic_launcher_foreground)
-                .into(mImageView);
+
     }
 
     @Override
